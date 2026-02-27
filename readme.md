@@ -1,191 +1,120 @@
 # Hinjewadi Digital Twin Project
 
-## Overview
+**Behaviorally-Aware Urban Traffic Twin with Predictive World Modeling**
 
-This project builds a **behaviorally-aware Digital Twin of Hinjewadi Phase 3 (Pune, India)** using:
+---
+
+## 1. Project Overview
+
+This project builds a **behaviorally-augmented Digital Twin of Hinjewadi Phase 3 (Pune, India)** using:
 
 * OpenStreetMap (OSM)
 * SUMO (Simulation of Urban Mobility)
 * Python (OSMnx, TraCI)
-* Structured behavioral modeling
-* Future PyTorch-based predictive systems
+* Structured lane-level logging
+* Graph-based congestion modeling
+* PyTorch (world model prototype)
 
-The system reconstructs real urban topology and simulates traffic flow under both lawful and probabilistic rule-deviating agents.
+The goal is not just traffic simulation.
 
-This is not just a traffic simulator.
+The goal is to build a **structured, dynamic replica of a real urban region** that can:
 
-It is a controlled experimental environment for studying:
+* Model lawful traffic behavior
+* Model probabilistic rule violations
+* Analyze congestion propagation
+* Learn predictive dynamics
+* Serve as a foundation for defensive navigation research
 
-* Congestion dynamics
-* Micro-violations and system fragility
-* Defensive navigation modeling
-* Structured adversarial environments
-* Foundations for future world models
-
----
-
-# What This Project Is
-
-This is a **Digital Twin** of a real urban region.
-
-The twin:
-
-* Extracts real road topology from OpenStreetMap
-* Converts it into a SUMO simulation network
-* Simulates traffic demand and congestion buildup
-* Injects probabilistic, pressure-driven driver deviations
-* Logs full vehicle state evolution for analysis
-
-The goal is to transform a static road network into a measurable, dynamic behavioral system.
+This project treats traffic as a **complex adaptive system**, not a perfectly rule-compliant one.
 
 ---
 
-# Why This Project Exists
+# 2. What This Project Is
 
-Indian urban traffic is not rule-perfect.
+This is an **early-stage Digital Twin prototype** of Hinjewadi Phase 3.
 
-Real-world traffic includes:
+It includes:
 
-* Unsignaled lane changes
+✔ Real road topology from OpenStreetMap
+✔ Lane-level connectivity
+✔ Traffic flow simulation
+✔ Behavioral violation injection
+✔ Structured state logging
+✔ Congestion hotspot detection
+✔ Temporal propagation analysis
+✔ Lane-graph construction
+✔ Predictive world modeling prototype
+
+It is not just SUMO scripting.
+
+It is a controlled experimental platform for studying:
+
+* Traffic intelligence
+* Adversarial micro-behavior
+* Defensive navigation systems
+* Propagation dynamics
+* Learned world modeling
+
+---
+
+# 3. Why This Project Exists
+
+Indian urban traffic does not follow idealized rules.
+
+Real-world behavior includes:
+
+* Aggressive lane changes
 * Opportunistic overtaking
-* Pressure-induced aggressive behavior
-* Rare wrong-way maneuvers
-* Adaptive local responses
+* Speed surges
+* Pressure-induced deviations
+* Congestion ripple effects
 
-Autonomous navigation systems that assume perfect rule compliance will underperform in such environments.
+Autonomous navigation systems trained only in rule-perfect environments will fail under such conditions.
 
 This project aims to:
 
-1. Model lawful traffic dynamics.
-2. Introduce controlled micro-violations.
-3. Measure how local deviations affect system-level congestion.
-4. Quantify fragility under behavioral noise.
-5. Generate structured datasets for robust navigation modeling.
+1. Model lawful traffic.
+2. Inject structured micro-violations.
+3. Quantify congestion formation.
+4. Analyze temporal and spatial propagation.
+5. Build predictive lane-level world models.
+6. Prepare for reinforcement-based navigation intelligence.
 
-Traffic is treated as a structured, partially adversarial system — not a deterministic one.
-
----
-
-# System Architecture
-
-The Digital Twin operates in layered form.
+Traffic is treated as a **structured adversarial environment**.
 
 ---
 
-## Layer 1 — Real Topology Reconstruction
+# 4. System Architecture
 
-* Road network extracted using OSMnx
-* Converted into SUMO-compatible format
-* Lanes, junctions, connectivity preserved
-
-This layer provides structural realism.
+The project operates in layered stages:
 
 ---
 
-## Layer 2 — Baseline Traffic Flow
+## Layer 1 — Topology Reconstruction
 
-* Configurable traffic demand
-* Peak-hour congestion buildup
-* Full vehicle state logging
-* Travel-time and bottleneck analysis
+* Extract Hinjewadi Phase 3 from OSM
+* Convert to SUMO network
+* Preserve lanes, junctions, and connectivity
+* Validate network integrity
 
-This establishes lawful baseline behavior.
+Output:
 
----
-
-## Layer 3 — Conservative Behavioral Engine
-
-Vehicles are assigned:
-
-* Driver aggressiveness ∈ [0,1]
-* Vehicle capability factor (bike vs car)
-
-At runtime, deviations are triggered probabilistically based on:
-
-* Waiting time
-* Speed deficit
-* Local congestion pressure
-* Nearby violation contagion
-
-All behaviors are:
-
-* State-triggered
-* Probability-scaled
-* Temporally bounded
-* Damped to prevent runaway collapse
+```
+data/raw_osm/
+data/sumo_network/
+```
 
 ---
 
-## Behavioral Rules (Conservative Realism Mode)
+## Layer 2 — Baseline Traffic Simulation
 
-### Lawful Behavior
+* Generate configurable traffic flows
+* Simulate peak-hour congestion
+* Log vehicle-level state at every timestep
 
-* Lane following
-* Route adherence
-* Speed constraints
-* Signal compliance
+Logged Features:
 
----
-
-### Probabilistic Micro-Violations
-
-These are frequent but low-impact.
-
-#### 1. Aggressive Lane Change
-
-Triggered when:
-
-* Speed deficit high
-* Waiting time rising
-* Adjacent lane available
-
-Primary turbulence mechanism.
-
----
-
-#### 2. Opportunistic Speed Surge
-
-Short, rare burst:
-
-* Activated under sustained pressure
-* Cooldown enforced
-* Duration limited
-* No continuous amplification
-
-Models uninformed overtaking behavior.
-
----
-
-#### 3. Behavioral Contagion
-
-* Nearby violations temporarily amplify pressure
-* Local ripple effects only
-* Strict time and radius bounds
-
-Models frustration propagation.
-
----
-
-#### 4. Short Wrong-Way Hop (Experimental)
-
-* Extremely rare
-* Only on multi-lane roads
-* Duration capped
-* No persistent route corruption
-
-Used for controlled topology shock testing.
-
----
-
-All violations are logged explicitly in the dataset.
-
----
-
-## Layer 4 — Structured Logging
-
-Each simulation logs per timestep:
-
-* Timestamp
+* Time
 * Vehicle ID
 * Position (x, y)
 * Speed
@@ -193,63 +122,141 @@ Each simulation logs per timestep:
 * Lane ID
 * Violation type
 
-This produces a behavior-labeled traffic dataset for:
+Output:
 
-* Congestion modeling
-* Violation clustering analysis
-* Predictive modeling
-* Defensive navigation training
-
----
-
-# Current Status
-
-## Milestone 1 — Environment Setup
-
-* Python environment configured
-* SUMO installation verified
-* TraCI integration working
-* Dependency validation script implemented
-* Git version control configured
+```
+data/logs/vehicle_log.csv
+```
 
 ---
 
-## Milestone 2 — Network Construction
+## Layer 3 — Behavioral Injection Engine
 
-* Hinjewadi Phase 3 extracted from OSM
-* Converted to SUMO network
-* Network validated
-* Baseline lawful simulation executed
+Each vehicle is assigned:
 
----
+* Driver aggressiveness ∈ [0,1]
+* Vehicle capability factor
 
-## Milestone 3 — Congestion Analysis
+Violations are probabilistic and pressure-triggered.
 
-* Vehicle-level CSV logging implemented
-* Congestion lifecycle analyzed
-* Peak congestion timing measured
-* Baseline vs deviation comparisons performed
+### Implemented Micro-Violations
 
----
+* Aggressive lane change
+* Speed surge under pressure
 
-## Milestone 4 — Conservative Behavioral Engine (Stable)
+Future:
 
-* Aggressive lane-change modeling
-* Bounded speed surge mechanism
-* Contagion effect implemented
-* Violation damping added
-* Stable 1800-step simulations validated
+* Short wrong-way hops
+* Risky merges
+* Lane-blocking behavior
 
-System exhibits:
+These create:
 
-* ~2–5% deviation rate
-* Increased congestion without collapse
-* Late-stage peak saturation
-* No runaway instability
+* Micro turbulence
+* Local instability
+* Realistic congestion ripple
+* Defensive learning signals
 
 ---
 
-# Project Structure
+## Layer 4 — Congestion Intelligence
+
+Implemented analytics:
+
+### Hotspot Analysis
+
+* Average speed per lane
+* Congestion ratio
+* Violation ratio
+* Correlation between violations and congestion
+
+### Temporal Causality
+
+* Lag correlation between violations and congestion
+* Per-lane propagation timing
+
+### Junction Propagation Analysis
+
+* Congestion spread across junctions
+* Delay propagation estimation
+* Identified strongest negative propagation junctions
+
+Results stored in:
+
+```
+results/
+```
+
+---
+
+## Layer 5 — Structured World State Tensor
+
+Built lane-level temporal dataset:
+
+Features per lane per timestep:
+
+* Mean speed
+* Vehicle density
+* Violation count
+* Congestion state
+* Future congestion label
+
+Output:
+
+```
+data/processed/lane_time_tensor.csv
+```
+
+Statistics (current build):
+
+* 157 active lanes
+* 1790 timesteps
+* ~3.4% future congestion rate
+
+---
+
+## Layer 6 — Lane Graph Construction
+
+Constructed adjacency graph between active lanes using SUMO connectivity.
+
+Output:
+
+```
+data/processed/lane_graph_edges.csv
+```
+
+Filtered graph:
+
+* 157 lanes
+* 164 connectivity edges
+* 1 isolated lane
+
+---
+
+## Layer 7 — Predictive World Model Prototype
+
+Trained PyTorch model to predict future congestion from:
+
+* Lane-level features
+* Connectivity graph
+
+Current results:
+
+* Accuracy ≈ 81%
+* Precision ≈ 0.20
+* Recall ≈ 0.95
+* F1 ≈ 0.33
+
+Interpretation:
+
+The model strongly detects congestion (high recall),
+but over-predicts (low precision).
+
+This is expected under class imbalance and early-stage modeling.
+
+---
+
+# 5. Project Structure
 
 ```
 Digital_twin_Project/
@@ -257,14 +264,19 @@ Digital_twin_Project/
 ├── src/
 │   ├── test.py
 │   ├── extract_hinjewadi.py
-│   ├── generate_flows.py
-│   ├── select_zones.py
+│   ├── build_lane_graph.py
 │   ├── run_simulation.py
+│   ├── analyze_hotspots.py
+│   ├── lane_temporal_analysis.py
+│   ├── junction_propagation_analysis.py
+│   ├── build_world_state_tensor.py
+│   ├── train_world_model.py
 │
 ├── data/
 │   ├── raw_osm/
 │   ├── sumo_network/
 │   ├── logs/
+│   ├── processed/
 │
 ├── results/
 │
@@ -274,11 +286,11 @@ Digital_twin_Project/
 
 ---
 
-# Installation Guide
+# 6. Installation Guide
 
 ## 1. Clone Repository
 
-```bash
+```
 git clone git@github.com:tejeshwarv16/Digital_twin_Project.git
 cd Digital_twin_Project
 ```
@@ -287,7 +299,7 @@ cd Digital_twin_Project
 
 ## 2. Create Conda Environment
 
-```bash
+```
 conda create -n hinjewadi_twin python=3.10
 conda activate hinjewadi_twin
 ```
@@ -296,13 +308,13 @@ conda activate hinjewadi_twin
 
 ## 3. Install Python Dependencies
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
-If needed:
+If missing:
 
-```bash
+```
 pip install osmnx networkx matplotlib pandas numpy torch
 ```
 
@@ -310,64 +322,95 @@ pip install osmnx networkx matplotlib pandas numpy torch
 
 ## 4. Install SUMO
 
-Download from:
-
+Download:
 [https://www.eclipse.org/sumo/](https://www.eclipse.org/sumo/)
 
 Verify:
 
-```bash
+```
 sumo --version
 ```
 
 ---
 
-## 5. Verify Environment
+## 5. Verify Setup
 
-```bash
+```
 python src/test.py
 ```
 
-Expected output:
-
-```
-[PASS] Import osmnx
-[PASS] Import networkx
-[PASS] SUMO binary accessible
-[PASS] TraCI import
-```
+All dependencies should pass.
 
 ---
 
-# Research Direction
+# 7. Current Milestones
 
-## Short-Term
+### Milestone 1 — Environment Setup
 
-* Spatial violation clustering analysis
-* Congestion hotspot correlation
-* Lawful vs behavioral comparison metrics
-* Travel-time inflation quantification
+✔ Python environment
+✔ SUMO integration
+✔ TraCI working
+✔ Git configured
 
-## Mid-Term
+### Milestone 2 — Network Construction
 
-* Predictive congestion modeling
-* Deviation probability learning
-* Defensive navigation strategy evaluation
+✔ OSM extraction
+✔ SUMO network conversion
+✔ Network validation
 
-## Long-Term Vision
+### Milestone 3 — Simulation + Logging
 
-Use structured traffic systems as a foundation for:
+✔ Traffic flow generation
+✔ Behavioral injection
+✔ Structured CSV logging
 
-* Robust world modeling
-* Causal dynamic system learning
-* Autonomous navigation under uncertainty
-* Behavior-aware simulation environments
+### Milestone 4 — Congestion Intelligence
+
+✔ Hotspot detection
+✔ Temporal causality
+✔ Junction propagation analysis
+
+### Milestone 5 — World Modeling
+
+✔ Lane-time tensor construction
+✔ Lane graph extraction
+✔ Predictive congestion model
 
 ---
 
-# Author
+# 8. Research Direction
 
-Tejeshwar V
-AI Research & Autonomous Systems
+Short-Term:
+
+* Improve world model precision
+* Address class imbalance
+* Implement ego navigation agent
+* Begin reinforcement-based decision learning
+
+Mid-Term:
+
+* Model-based RL using learned transition dynamics
+* Defensive navigation policy training
+* Rare-event stress testing
+
+Long-Term:
+
+* Structured world foundation model
+* Generalizable urban traffic intelligence
+* Causal dynamic systems learning under adversarial conditions
+
+---
+
+# 9. Current Status Summary
+
+This project is:
+
+A behaviorally-augmented digital twin prototype
+with predictive congestion modeling
+and lane-level propagation analysis.
+
+It is not yet calibrated against real traffic data.
+
+It is a research platform for building intelligent navigation systems under uncertainty.
 
 ---
