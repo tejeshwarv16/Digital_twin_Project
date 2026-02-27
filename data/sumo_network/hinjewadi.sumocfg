@@ -1,0 +1,11 @@
+<configuration>
+    <input>
+        <net-file value="hinjewadi_phase3.net.xml"/>
+        <route-files value="hinjewadi.rou.xml"/>
+    </input>
+
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+    </time>
+</configuration>
